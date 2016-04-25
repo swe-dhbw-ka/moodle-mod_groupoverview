@@ -1,0 +1,55 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_groupoverview/groups
+
+    Template which defines how to display a list of groups.
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * linked_groups
+    * courseid
+
+    Example context (json):
+    {
+        "linked_groups":
+        [
+            {
+                "id": 2,
+                "name": "Circles"
+            },
+            {
+                "id": 5,
+                "name": "JournalEditor"
+            }
+        ],
+        "courseid": 1
+    }
+}}
+
+<ul>
+    {{#linked_groups}}
+    <li>
+        <a href="../../user/index.php?id={{courseid}}&group={{id}}">{{name}}</a>
+    </li>
+    {{/linked_groups}}
+</ul>

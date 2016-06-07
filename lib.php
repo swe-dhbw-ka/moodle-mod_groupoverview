@@ -198,12 +198,13 @@ function groupoverview_get_categories($groupoverviewid) {
  * attribute.
  *
  * @param int $groupoverviewid The ID of the groupoverview module instance
+ * @param int $userid The ID of the logged in user
  * @return array The categories with the groups that are mapped to them
  */
-function groupoverview_get_categories_with_groups($groupoverviewid) {
+function groupoverview_get_categories_with_groups($groupoverviewid, $userid = null) {
     $categories = groupoverview_get_categories($groupoverviewid);
     foreach ($categories as $category) {
-        $category->linked_groups = groupoverview_get_groups_in_a_category($category->id);
+        $category->linked_groups = groupoverview_get_groups_in_a_category($category->id, $userid);
     }
     return $categories;
 }
@@ -212,19 +213,22 @@ function groupoverview_get_categories_with_groups($groupoverviewid) {
  * Returns the groups that are mapped to a specific category.
  *
  * @param int $categoryid The ID of the category
+ * @param int $userid The ID of the logged in user
  * @return array The groups that are associated with the specified category
  */
-function groupoverview_get_groups_in_a_category($categoryid) {
+function groupoverview_get_groups_in_a_category($categoryid, $userid = null) {
     global $DB;
 
     $groupids = $DB->get_records('groupoverview_mappings', array('categoryid' => $categoryid), 'groupid', 'groupid');
     $groups = array();
     foreach ($groupids as $groupid) {
-        try {
-            $group = $DB->get_record('groups', array('id' => $groupid->groupid), '*', MUST_EXIST);
-            $groups[] = $group;
-        } catch (Exception $e) {
-            $DB->delete_records('groupoverview_mappings', array('groupid' => $groupid->groupid));
+        if ($userid == null || groups_is_member($groupid->groupid, $userid)) {
+            try {
+                $group = $DB->get_record('groups', array('id' => $groupid->groupid), '*', MUST_EXIST);
+                $groups[] = $group;
+            } catch (Exception $e) {
+                $DB->delete_records('groupoverview_mappings', array('groupid' => $groupid->groupid));
+            }
         }
     }
     return $groups;

@@ -43,9 +43,21 @@ class mod_groupoverview_mod_edit extends moodleform {
 
         $groupoverviewid = $this->_customdata['groupoverviewid'];
         $courseid = $this->_customdata['courseid'];
+        $groupmode = $this->_customdata['groupmode'];
+
+        if ($groupmode == 0) {
+            $nogroups = get_string('groupsnone', 'group');
+            $mform->addElement('static', 'warning', get_string('warning', 'mod_groupoverview'),
+                    get_string('warning:groupmode:nogroups:managegroups', 'mod_groupoverview', $nogroups));
+        } else if ($groupmode == 1) {
+            $groupmodes = new stdClass();
+            $groupmodes->seperate = get_string('groupsseparate', 'group');
+            $groupmodes->visible = get_string('groupsvisible', 'group');
+            $mform->addElement('static', 'warning', get_string('warning', 'mod_groupoverview'),
+                    get_string('warning:groupmode:seperate:managegroups', 'mod_groupoverview', $groupmodes));
+        }
 
         $groups = array_values(groups_get_all_groups($courseid));
-
         if (empty($groups)) {
             $mform->addElement('static', 'warning', get_string('warning', 'mod_groupoverview'),
                     get_string('mappingwarning', 'mod_groupoverview'));
@@ -73,6 +85,11 @@ class mod_groupoverview_mod_edit extends moodleform {
     /**
      * Validates the data entered by the user by checking whether the groups' IDs and the categories are valid in the context of
      * this groupoverview module instance.
+     *
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array of "element_name"=>"error_description" if there are errors, or an empty array if everything is OK (true allowed
+     * for backwards compatibility too).
      *
      * {@inheritDoc}
      * @see moodleform::validation()

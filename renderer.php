@@ -61,6 +61,43 @@ class mod_groupoverview_renderer extends plugin_renderer_base {
     }
 
     /**
+     * Renders warnings at the top of the page depending on the group mode settings
+     *
+     * @param bool $hasmanagingcapability Boolean that indicates whether the logged in user has the capability to manage groups
+     * (course:managegroups)
+     * @param int $groupmode The number of the group mode (0, 1 or 2)
+     * @return string The html for the top of the page
+     */
+    public function show_warnings($hasmanagingcapability, $groupmode) {
+
+        if ($groupmode == 0 && $hasmanagingcapability) {
+            $nogroups = get_string('groupsnone', 'group');
+            return $this->show_warning_label() .
+                html_writer::span(get_string('warning:groupmode:nogroups:managegroups', 'mod_groupoverview', $nogroups));
+        } else if ($groupmode == 1 && $hasmanagingcapability) {
+            $groupmodes = new stdClass();
+            $groupmodes->seperate = get_string('groupsseparate', 'group');
+            $groupmodes->visible = get_string('groupsvisible', 'group');
+            return $this->show_warning_label() .
+                html_writer::span(get_string('warning:groupmode:seperate:managegroups', 'mod_groupoverview', $groupmodes));
+        } else if ($groupmode == 1 && !$hasmanagingcapability) {
+            return $this->show_warning_label() .
+                html_writer::span(get_string('warning:groupmode:seperate:notallowedtomanagegroups', 'mod_groupoverview'));
+        }
+
+        return '';
+    }
+
+    /**
+     * Renders a label that reads 'Warning' (or a translation of it) to show in front of warnings
+     *
+     * @return string The html of warning label
+     */
+    protected function show_warning_label() {
+        return html_writer::span('<b>' . get_string('warning', 'mod_groupoverview') . ' </b>');
+    }
+
+    /**
      * Renders the bottom of the page
      *
      * @return string The html of the bottom of the page

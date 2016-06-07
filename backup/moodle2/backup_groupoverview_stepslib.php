@@ -36,8 +36,8 @@ class backup_groupoverview_activity_structure_step extends backup_activity_struc
     /**
      * Defines the structure of the backup
      *
-     * The groupoverview activity does not contain user data and not additional nodes
-     * but the instances itself.
+     * The groupoverview activity does not contain user data. Additional nodes apart from the instances itself are the categories
+     * and mappings.
      *
      * @return backup_nested_element
      */

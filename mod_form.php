@@ -112,6 +112,9 @@ class mod_groupoverview_mod_form extends moodleform_mod {
 
     /**
      * Sets the default values for the form by using the data that is already stored in the database.
+     *
+     * @param array $defaultvalues passed by reference
+     *
      * {@inheritDoc}
      * @see moodleform_mod::data_preprocessing()
      */

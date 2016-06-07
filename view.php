@@ -65,10 +65,12 @@ $output = $PAGE->get_renderer('mod_groupoverview');
 
 echo $output->show_top_of_page($groupoverview);
 
-if ($USER->editing !== null && $USER->editing === 1) {
+$groupmode = groups_get_course_groupmode($course);
+if (property_exists($USER, 'editing') && $USER->editing !== null && $USER->editing === 1) {
     $mform = new mod_groupoverview_mod_edit(null, array(
             'groupoverviewid' => $groupoverview->id,
-            'courseid' => $course->id));
+            'courseid' => $course->id,
+            'groupmode' => $groupmode));
     $toform = groupoverview_get_mappings($groupoverview->id);
     $mform->set_data($toform);
     if ($mform->is_cancelled()) {
@@ -81,7 +83,16 @@ if ($USER->editing !== null && $USER->editing === 1) {
     }
     $mform->display();
 } else {
-    $categories = groupoverview_get_categories_with_groups($groupoverview->id);
+    $context = context_module::instance($cmid);
+    $hasmanagingcapability = has_capability('moodle/course:managegroups', $context);
+
+    echo $output->show_warnings($hasmanagingcapability, $groupmode);
+
+    if ($groupmode == 1 && $hasmanagingcapability != 1) {
+        $categories = groupoverview_get_categories_with_groups($groupoverview->id, $USER->id);
+    } else {
+        $categories = groupoverview_get_categories_with_groups($groupoverview->id);
+    }
     $page = new mod_groupoverview_renderable($categories, $course->id);
     echo $output->render_page($page);
 }

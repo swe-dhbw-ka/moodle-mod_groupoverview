@@ -25,8 +25,18 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['atleastonecategory'] = 'You need to provide at least one category.';
+$string['categories'] = 'Categories';
+$string['categorydescriptionno'] = 'Description {no}';
+$string['categoryimg'] = 'Image for the category';
+$string['categorynameno'] = 'Name {no}';
+$string['categoryno'] = 'Category {no}';
+$string['mappingerror:category'] = 'Selected category is not valid.';
+$string['mappingerror:group'] = 'Group ID {$a} is not part of this course. ';
+$string['mappingwarning'] = 'There are no groups in this course yet.';
 $string['modulename'] = 'Groupoverview';
-$string['modulename_help'] = 'The groupoverview module allows students and teachers to see a structured overview of all the groups. Teachers define this structure by creating categories to which the groups of the course can be mapped.';
+$string['modulename_help'] = 'The groupoverview module allows students and teachers to see a structured overview of all the groups.
+        Teachers define this structure by creating categories to which the groups of the course can be mapped.';
 $string['modulenameplural'] = 'Groupoverviews';
 $string['page-mod-groupoverview-view'] = 'Groupoverview Module Main Page';
 $string['pluginadministration'] = 'Groupoverview Administration';
@@ -38,13 +48,10 @@ $string['showdescriptionview'] = 'Display description on view page';
 $string['showdescriptionview_help'] = 'If enabled, the description above will be displayed on the groupoverview page.';
 $string['shownameview'] = 'Display name on view page';
 $string['shownameview_help'] = 'If enabled, the groupoverview name will be displayed as heading on the groupoverview page.';
-$string['categories'] = 'Categories';
-$string['categoryno'] = 'Category {no}';
-$string['categorynameno'] = 'Name {no}';
-$string['categorydescriptionno'] = 'Description {no}';
-$string['categoryimg'] = 'Image for the category';
-$string['atleastonecategory'] = 'You need to provide at least one category.';
-$string['mappingerror:group'] = 'Group ID {$a} is not part of this course. ';
-$string['mappingerror:category'] = 'Selected category is not valid.';
 $string['warning'] = 'Warning';
-$string['mappingwarning'] = 'There are no groups in this course yet.';
+$string['warning:groupmode:nogroups:managegroups'] = 'The group mode of this course is set to \'{$a}\'. Therefore, users are not
+        able to view the groups\' descriptions.';
+$string['warning:groupmode:seperate:managegroups'] = 'The group mode of this course is set to \'{$a->seperate}\'. Therefore, users
+        are only able to view the names and descriptions of the groups they are in. If you want them to see all the groups, you have
+        to set the group mode to \'{$a->visible}\'.';
+$string['warning:groupmode:seperate:notallowedtomanagegroups'] = 'You are only allowed to see the names of the groups you are in.';

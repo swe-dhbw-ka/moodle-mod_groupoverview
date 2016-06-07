@@ -18,7 +18,7 @@ Additionally, the groupings of the course could also be used as categories, so t
 Usage
 -----
 
-**Note**: It only makes sense to use this plugin if the group mode of the course is set to 'Visible Groups'. Keep in mind that even if this is not the case, students _will_ be able to see the name of the other groups. However, the elements of the list of groups link to the specific groups in the 'Participants' view of the course which can only be seen by the students when the group mode is set to 'Visible Groups' as mentioned above.
+**Note**: It only makes sense to use this plugin if the group mode of the course is set to 'Visible Groups'.
 
 1. Add the module instance into the course.
 2. Define at least one category.
